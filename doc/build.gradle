@@ -1,0 +1,94 @@
+// https://github.com/JetBrains/intellij-platform-plugin-template
+import org.jetbrains.changelog.Changelog
+import org.jetbrains.changelog.ChangelogSectionUrlBuilder
+import org.jetbrains.changelog.ExtensionsKt
+
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '1.16.1'
+    id 'org.jetbrains.changelog' version '2.2.0'
+    id 'org.jetbrains.qodana' version '0.1.13'
+}
+
+group GROUP
+version VERSION
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+}
+
+intellij {
+    pluginName = PLUGIN_NAME
+    version = PLATFORM_VERSION
+    type = PLATFORM_TYPE
+    plugins = PLATFORM_PLUGINS.split(',').collect { it.trim() }.findAll { !it.isEmpty() }
+}
+
+// Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
+changelog {
+    version = VERSION
+    header = "[${-> version.get()}] - ${ExtensionsKt.date("yyyy-MM-dd")}"
+    groups.empty()
+    repositoryUrl = REPOSITORY_URL
+    keepUnreleasedSection = true
+    unreleasedTerm = "[Unreleased]"
+    sectionUrlBuilder = { repositoryUrl, currentVersion, previousVersion, isUnreleased -> "unreleased" } as ChangelogSectionUrlBuilder
+}
+
+// Configure Gradle Qodana Plugin - read more: https://github.com/JetBrains/gradle-qodana-plugin
+qodana {
+    cachePath = provider { file(".qodana").canonicalPath }
+    reportPath = provider { file("build/reports/inspections").canonicalPath }
+    saveReport = true
+    showReport = "1".equals(System.getenv("QODANA_SHOW_REPORT"))
+}
+
+tasks {
+    wrapper {
+        gradleVersion = GRADLE_VERSION
+    }
+
+    patchPluginXml {
+        version = VERSION
+        sinceBuild = PLUGIN_SINCE_BUILD
+        untilBuild = PLUGIN_UNTIL_BUILD
+
+        // Extract the <!-- Plugin description --> section from README.md and provide for the plugin's manifest
+        def start = "<!-- Plugin description -->"
+        def end = "<!-- Plugin description end -->"
+        def lines = new File(rootDir, "README.md").readLines()
+        if (!lines.containsAll([start, end])) {
+            throw GradleException("Plugin description section not found in README.md:\n$start ... $end")
+        }
+        pluginDescription = lines.subList(lines.indexOf(start) + 1, lines.indexOf(end))
+                .join("\n").transform { ExtensionsKt.markdownToHTML(it, "\n") }
+
+        // local variable for configuration cache compatibility
+        // def changelog = project.changelog
+        // Get the latest available change notes from the changelog file
+        changeNotes = provider {
+            def item = VERSION.endsWith("-unreleased") ?
+                    changelog.getUnreleased() : changelog.get(VERSION)
+            changelog.renderItem(item
+                    .withHeader(false)
+                    .withEmptySections(false),
+                    Changelog.OutputType.HTML
+            )
+        }
+    }
+
+    publishPlugin {
+        def channel = "default"
+        if (VERSION.contains("-")) {
+            channel = VERSION.substring(VERSION.indexOf("-") + 1)
+        }
+        dependsOn("patchChangelog")
+        token = System.getenv("PUBLISH_TOKEN")
+        // The pluginVersion is based on the SemVer (https://semver.org) and supports pre-release labels, like 2.1.7-alpha.3
+        // Specify pre-release label to publish the plugin in a custom Release Channel automatically. Read more:
+        // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
+        channels = [channel]
+    }
+}
