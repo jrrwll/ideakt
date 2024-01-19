@@ -1,4 +1,4 @@
-package util;
+package org.dreamcat.ideatk.util;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.DumbAwareAction;

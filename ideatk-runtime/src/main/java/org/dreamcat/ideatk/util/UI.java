@@ -1,4 +1,4 @@
-package util;
+package org.dreamcat.ideatk.util;
 
 import com.intellij.execution.configurations.JavaParameters;
 import com.intellij.notification.NotificationType;

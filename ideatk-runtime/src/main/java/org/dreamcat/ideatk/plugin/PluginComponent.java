@@ -1,3 +1,5 @@
+package org.dreamcat.ideatk.plugin;
+
 /**
  * @author Jerry Will
  * @version 2023-12-22
@@ -13,6 +15,10 @@ public abstract class PluginComponent {
     }
 
     public void stop() {
+
+    }
+
+    public static void main(String[] args) {
 
     }
 }

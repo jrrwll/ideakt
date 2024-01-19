@@ -1,4 +1,4 @@
-package util;
+package org.dreamcat.ideatk.util;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;

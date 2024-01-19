@@ -1,7 +1,6 @@
-package util;
+package org.dreamcat.ideatk.util;
 
 import com.intellij.ui.jcef.JBCefBrowser;
-import com.intellij.ui.jcef.JBCefClient;
 
 /**
  * @author Jerry Will
@@ -12,7 +11,7 @@ public class BrowserUtil {
     public static JBCefBrowser create() {
 
         JBCefBrowser browser = new JBCefBrowser();
-        browser.getComponent()
+        browser.getComponent();
 
         browser.loadURL("url");
 

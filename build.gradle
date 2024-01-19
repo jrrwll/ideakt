@@ -2,43 +2,32 @@ plugins {
     id 'java'
     // https://github.com/JetBrains/intellij-platform-plugin-template
     // https://plugins.gradle.org/plugin/org.jetbrains.intellij
-    id 'org.jetbrains.intellij' version '1.16.1'
+    id 'org.jetbrains.intellij' version '1.16.1' apply false
 }
 
-group GROUP_ID
-version VERSION
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-}
-
-dependencies {
-    implementation "org.dreamcat:common:0.4"
-}
-
-intellij {
-    pluginName = PLUGIN_NAME
-    version = PLATFORM_VERSION
-    type = PLATFORM_TYPE
-    plugins = PLATFORM_PLUGINS.split(',').collect { it.trim() }.findAll { !it.isEmpty() }
-}
-
-tasks {
-    wrapper {
-        gradleVersion = GRADLE_VERSION
+subprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     }
 
-    publishPlugin {
-        def channel = "default"
-        if (VERSION.contains("-")) {
-            channel = VERSION.substring(VERSION.indexOf("-") + 1)
-        }
-        token = System.getenv("PUBLISH_TOKEN")
-        // The pluginVersion is based on the SemVer (https://semver.org) and supports pre-release labels, like 2.1.7-alpha.3
-        // Specify pre-release label to publish the plugin in a custom Release Channel automatically. Read more:
-        // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
-        channels = [channel]
+    apply plugin: 'java'
+    apply plugin: 'org.jetbrains.intellij'
+
+    group GROUP_ID
+    version VERSION
+
+    java.sourceCompatibility = JavaVersion.VERSION_17
+
+    dependencies {
+        implementation "org.dreamcat:common:0.4"
+    }
+
+    intellij {
+        pluginName = PLUGIN_NAME
+        version = PLATFORM_VERSION
+        type = PLATFORM_TYPE
+        plugins = PLATFORM_PLUGINS.split(',').collect { it.trim() }.findAll { !it.isEmpty() }
     }
 }

@@ -1,4 +1,4 @@
-package util;
+package org.dreamcat.ideatk.util;
 
 import com.intellij.ui.jcef.JBCefClient;
 import java.net.URL;

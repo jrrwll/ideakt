@@ -1,13 +1,9 @@
-package util;
+package org.dreamcat.ideatk.util;
 
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationDisplayType;
 import com.intellij.notification.NotificationGroup;
-import com.intellij.notification.NotificationGroupManager;
 import com.intellij.notification.NotificationType;
-import com.intellij.notification.impl.NotificationGroupEP;
-import com.intellij.notification.impl.NotificationGroupManagerImpl;
-import com.intellij.notification.impl.NotificationGroupManagerImplKt;
 import com.intellij.openapi.project.Project;
 
 /**
