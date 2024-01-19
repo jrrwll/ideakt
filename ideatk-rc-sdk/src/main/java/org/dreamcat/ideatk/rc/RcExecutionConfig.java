@@ -6,4 +6,7 @@ package org.dreamcat.ideatk.rc;
  */
 public class RcExecutionConfig {
 
+    public String getName(RcVariableSubstitutor substitutor) {
+
+    }
 }

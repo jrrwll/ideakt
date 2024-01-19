@@ -1,4 +1,4 @@
-package org.dreamcat.ideatk.rc;
+package org.dreamcat.ideatk.rc.run;
 
 import static org.dreamcat.ideatk.rc.RcConstants.RC_NAME;
 
@@ -6,6 +6,7 @@ import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.ConfigurationType;
 import com.intellij.execution.configurations.RunConfiguration;
 import com.intellij.openapi.project.Project;
+import org.dreamcat.ideatk.rc.RcFileType;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import com.intellij.psi.search.FileTypeIndex;

@@ -6,6 +6,7 @@ import static org.dreamcat.ideatk.rc.RcConstants.RC_NAME;
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.ConfigurationType;
 import javax.swing.Icon;
+import org.dreamcat.ideatk.rc.run.RcRunConfigurationFactory;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nls.Capitalization;
 import org.jetbrains.annotations.NonNls;

@@ -11,4 +11,7 @@ public class RcConstants {
     public static final String RC_EXTENSION = RcBundle.message("extension");
     public static final boolean RC_ULTIMATE_ONLY = RcBundle.booleanMessage("ultimate_only");
 
+    // "HTTP Client"
+    public static final String RC_TEST_FRAMEWORK_NAME = RcBundle.message("test_framework_name");
+
 }
