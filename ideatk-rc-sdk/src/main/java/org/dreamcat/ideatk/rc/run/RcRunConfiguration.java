@@ -27,7 +27,6 @@ import com.intellij.execution.testframework.sm.runner.SMTRunnerConsoleProperties
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.execution.configurations.RuntimeConfigurationException;
 import com.intellij.util.xmlb.annotations.Attribute;
-import com.intellij.util.xmlb.annotations.Transient;
 
 /**
  * @author Jerry Will
@@ -47,6 +46,10 @@ public class RcRunConfiguration extends LocatableConfigurationBase<Element> {
 
     public @NotNull Settings createSettings() {
         return new Settings();
+    }
+
+    public @NotNull Settings getSettings() {
+        return settings;
     }
 
     @Override
@@ -108,13 +111,14 @@ public class RcRunConfiguration extends LocatableConfigurationBase<Element> {
     public static class Settings {
         private String environment = "<Default Environment>";
         private String debugger = null;
-        private String pathToFile = null;
+        private String path = null;
         private int index = 1;
         private String requestIdentifier = "";
         private RcRunType runType = RcRunType.ALL_IN_FILE;
         private String fileText;
         private boolean showInformationAboutRequest = true;
 
+        @Attribute("environment")
         public String getEnvironment() {
             return environment;
         }
@@ -132,14 +136,16 @@ public class RcRunConfiguration extends LocatableConfigurationBase<Element> {
             this.debugger = debugger;
         }
 
-        public String getPathToFile() {
-            return pathToFile;
+        @Attribute("path")
+        public String getPath() {
+            return path;
         }
 
-        public void setPathToFile(String pathToFile) {
-            this.pathToFile = pathToFile;
+        public void setPath(String path) {
+            this.path = path;
         }
 
+        @Attribute("index")
         public int getIndex() {
             return index;
         }
@@ -148,6 +154,7 @@ public class RcRunConfiguration extends LocatableConfigurationBase<Element> {
             this.index = index;
         }
 
+        @Attribute("requestIdentifier")
         public String getRequestIdentifier() {
             return requestIdentifier;
         }
@@ -156,6 +163,7 @@ public class RcRunConfiguration extends LocatableConfigurationBase<Element> {
             this.requestIdentifier = requestIdentifier;
         }
 
+        @Attribute("runType")
         public RcRunType getRunType() {
             return runType;
         }

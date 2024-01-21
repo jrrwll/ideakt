@@ -41,5 +41,4 @@ public class RcRunConfigurationFactory extends ConfigurationFactory {
     public @NotNull RunConfiguration createTemplateConfiguration(@NotNull Project project) {
         return new RcRunConfiguration(project, this, "");
     }
-
 }
