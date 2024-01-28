@@ -1,3 +1,27 @@
+apply plugin: 'org.jetbrains.intellij'
+
+/**
+ * @see String
+ */
+intellij {
+    // https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html#configuration-intellij-extension
+    pluginName = "Jerry Will's IDEA Plugins"
+    type = "IC"
+    // https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+    version = "2022.2"
+    // https://plugins.jetbrains.com/docs/intellij/plugin-dependencies.html
+    plugins = []
+}
+
+patchPluginXml {
+    // https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html
+    sinceBuild = "222"
+    untilBuild = "222.*"
+}
+
+/**
+ * @see String
+ */
 publishPlugin {
     def channel = "default"
     if (VERSION.contains("-")) {

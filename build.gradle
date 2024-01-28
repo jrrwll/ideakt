@@ -13,7 +13,7 @@ subprojects {
     }
 
     apply plugin: 'java'
-    apply plugin: 'org.jetbrains.intellij'
+    // apply plugin: 'org.jetbrains.intellij'
 
     group GROUP_ID
     version VERSION
@@ -24,10 +24,10 @@ subprojects {
         implementation "org.dreamcat:common:0.4"
     }
 
-    intellij {
-        pluginName = PLUGIN_NAME
-        version = PLATFORM_VERSION
-        type = PLATFORM_TYPE
-        plugins = PLATFORM_PLUGINS.split(',').collect { it.trim() }.findAll { !it.isEmpty() }
-    }
+    // intellij {
+    //     pluginName = PLUGIN_NAME
+    //     version = PLATFORM_VERSION
+    //     type = PLATFORM_TYPE
+    //     plugins = PLATFORM_PLUGINS.split(',').collect { it.trim() }.findAll { !it.isEmpty() }
+    // }
 }
