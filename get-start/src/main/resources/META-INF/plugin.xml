@@ -1,0 +1,71 @@
+<idea-plugin>
+  <id>org.dreamcat.ideatk.getstart</id>
+  <name>Get-Start</name>
+  <vendor email="support@dreamcat.org" url="https://dreamcat.org">Jerry Will</vendor>
+  <description><![CDATA[
+<strong>Demo Idea插件</strong><br/><br/>
+目前支持的特性如下：
+<ul>
+  <li>A</li>
+  <li>B</li>
+  <li>C</li>
+ </ul>
+]]></description>
+
+  <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.modules.java</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <configurationType implementation="org.dreamcat.ideatk.rc.remote.MyRemoteConfigurationType"/>
+    <configurationType implementation="org.dreamcat.ideatk.rc.request.MyRequestRunConfigurationType"/>
+    <!--<errorHandler implementation="org.dreamcat.ideatk.handler.SentryReportHandler"/>-->
+
+    <!--  窗体填充面板  -->
+    <toolWindow id="StockToolWindow" canCloseContents="true" anchor="bottom" factoryClass="org.dreamcat.ideatk.get_start.stock.StockToolWindowFactory"/>
+    <!--  应用级单例  -->
+    <applicationService serviceImplementation="org.dreamcat.ideatk.get_start.stock.StockDataState"/>
+    <!--  idea 应用级设置(项目级 projectConfigurable) groupId：
+          root、appearance、build、build.tools、tools、language、editor、project，other
+    -->
+    <applicationConfigurable groupId="tools" displayName="Stock Plugin" id="preference.StockSettingsConfigurable" instance="org.dreamcat.ideatk.get_start.stock.StockSettingsConfigurable"/>
+    <!--  启动时执行  -->
+    <postStartupActivity implementation="org.dreamcat.ideatk.get_start.tab_highlighter.TabHighlighterStartupActivity"/>
+    <editorTabColorProvider implementation="org.dreamcat.ideatk.get_start.tab_highlighter.TabHighlighterTabColorProvider"/>
+    <projectConfigurable groupId="tools" displayName="Active Tab Highlighter Plugin" id="preference.HighlighterSettingsConfigurable" instance="org.dreamcat.ideatk.get_start.tab_highlighter.TabHighlighterSettingsConfigurable"/>
+    <projectService serviceImplementation="org.dreamcat.ideatk.get_start.tab_highlighter.HighlighterSettingsConfig"/>
+  </extensions>
+
+  <actions>
+    <action class="org.dreamcat.ideatk.get_start.action.JavaSelectAction"
+      id="org.dreamcat.ideatk.action.JavaSelectAction"
+      text="Java Select Action">
+      <!-- 菜单 - Tools -->
+      <add-to-group group-id="ToolsMenu" anchor="last"/>
+      <!--  工具栏 - Run-->
+      <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
+      <!-- 右键菜单 -->
+      <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+    </action>
+
+    <action class="org.dreamcat.ideatk.get_start.action.MarkdownAction"
+      id="org.dreamcat.ideatk.action.MarkdownAction"
+      text="Markdown Select Action">
+      <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+    </action>
+
+    <action class="org.dreamcat.ideatk.get_start.action.StringSelectAction"
+      id="org.dreamcat.ideatk.action.StringSelectAction"
+      text="String Select Action">
+      <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+    </action>
+
+    <action class="org.dreamcat.ideatk.get_start.action.DialogAction"
+      id="org.dreamcat.ideatk.action.DialogAction"
+      text="Dialog Action"
+      icon="AllIcons.Toolwindows.WebToolWindow"
+      popup="true">
+      <add-to-group group-id="ToolsMenu" anchor="last"/>
+      <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
+    </action>
+  </actions>
+</idea-plugin>

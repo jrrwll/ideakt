@@ -13,21 +13,19 @@ subprojects {
     }
 
     apply plugin: 'java'
-    // apply plugin: 'org.jetbrains.intellij'
 
     group GROUP_ID
     version VERSION
-
     java.sourceCompatibility = JavaVersion.VERSION_17
 
-    dependencies {
-        implementation "org.dreamcat:common:0.4"
+    ext {
+        // https://mvnrepository.com/artifact/org.projectlombok/lombok
+        lombokVersion = '1.18.30'
     }
 
-    // intellij {
-    //     pluginName = PLUGIN_NAME
-    //     version = PLATFORM_VERSION
-    //     type = PLATFORM_TYPE
-    //     plugins = PLATFORM_PLUGINS.split(',').collect { it.trim() }.findAll { !it.isEmpty() }
-    // }
+    dependencies {
+        compileOnly "org.projectlombok:lombok:$lombokVersion"
+        annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+        implementation "org.dreamcat:common:0.5-SNAPSHOT"
+    }
 }

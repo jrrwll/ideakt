@@ -1,0 +1,8 @@
+apply from: new File(rootDir, 'idea.gradle')
+
+dependencies {
+    implementation project(':ideatk-util')
+
+    // // https://mvnrepository.com/artifact/io.sentry/sentry
+    implementation 'io.sentry:sentry:7.2.0'
+}

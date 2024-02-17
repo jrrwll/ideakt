@@ -1,5 +1,6 @@
 rootProject.name = 'ideatk'
 
 include 'get-start'
+include 'ideatk-util'
 include 'ideatk-runtime'
 include 'ideatk-rc-sdk'
