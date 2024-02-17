@@ -14,11 +14,13 @@
 
   <depends>com.intellij.modules.platform</depends>
   <depends>com.intellij.modules.java</depends>
+  <!-- 允许使用javafx作为UI -->
+  <!-- <depends>com.intellij.javafx</depends> -->
 
   <extensions defaultExtensionNs="com.intellij">
-    <configurationType implementation="org.dreamcat.ideatk.rc.remote.MyRemoteConfigurationType"/>
-    <configurationType implementation="org.dreamcat.ideatk.rc.request.MyRequestRunConfigurationType"/>
     <!--<errorHandler implementation="org.dreamcat.ideatk.handler.SentryReportHandler"/>-->
+    <!-- 运行配置 -->
+    <configurationType implementation="org.dreamcat.ideatk.get_start.rc.MyRunConfigurationType"/>
 
     <!--  窗体填充面板  -->
     <toolWindow id="StockToolWindow" canCloseContents="true" anchor="bottom" factoryClass="org.dreamcat.ideatk.get_start.stock.StockToolWindowFactory"/>
@@ -28,6 +30,7 @@
           root、appearance、build、build.tools、tools、language、editor、project，other
     -->
     <applicationConfigurable groupId="tools" displayName="Stock Plugin" id="preference.StockSettingsConfigurable" instance="org.dreamcat.ideatk.get_start.stock.StockSettingsConfigurable"/>
+
     <!--  启动时执行  -->
     <postStartupActivity implementation="org.dreamcat.ideatk.get_start.tab_highlighter.TabHighlighterStartupActivity"/>
     <editorTabColorProvider implementation="org.dreamcat.ideatk.get_start.tab_highlighter.TabHighlighterTabColorProvider"/>

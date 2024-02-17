@@ -26,6 +26,8 @@ subprojects {
     dependencies {
         compileOnly "org.projectlombok:lombok:$lombokVersion"
         annotationProcessor "org.projectlombok:lombok:$lombokVersion"
-        implementation "org.dreamcat:common:0.5-SNAPSHOT"
+        implementation ("org.dreamcat:common:0.5-SNAPSHOT") {
+            exclude group: 'org.slf4j'
+        }
     }
 }

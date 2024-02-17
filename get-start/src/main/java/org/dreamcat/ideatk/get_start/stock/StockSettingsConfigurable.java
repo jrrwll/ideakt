@@ -3,7 +3,6 @@ package org.dreamcat.ideatk.get_start.stock;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import javax.swing.JComponent;
-import org.dreamcat.ideatk.util.PasswordSafeUtil;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -52,6 +51,6 @@ public class StockSettingsConfigurable implements SearchableConfigurable {
     public void apply() throws ConfigurationException {
         String token = form.textField.getText();
         StockDataState.getInstance().setToken(token);
-        PasswordSafeUtil.storePassword("stock_password", "myAccount", token);
+        // PasswordSafeUtil.storePassword("stock_password", "myAccount", token);
     }
 }
