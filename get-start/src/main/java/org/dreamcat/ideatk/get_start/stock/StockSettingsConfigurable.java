@@ -3,6 +3,7 @@ package org.dreamcat.ideatk.get_start.stock;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import javax.swing.JComponent;
+import org.dreamcat.common.util.ObjectUtil;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -17,6 +18,11 @@ public class StockSettingsConfigurable implements SearchableConfigurable {
 
     public StockSettingsConfigurable(){
         this.form = new StockSettingsForm();
+
+        String token = StockDataState.getInstance().getToken();
+        if (ObjectUtil.isNotEmpty(token)) {
+            form.textField.setText(token);
+        }
     }
 
     @Override
@@ -31,10 +37,6 @@ public class StockSettingsConfigurable implements SearchableConfigurable {
 
     public @Nullable String getHelpTopic() {
         return "preference.StockSettingsConfigurable";
-    }
-
-    public @Nullable Runnable enableSearch(String s) {
-        return null;
     }
 
     @Override

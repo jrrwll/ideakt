@@ -1,6 +1,8 @@
 package org.dreamcat.ideatk.get_start.tab_highlighter;
 
+import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx;
+import com.intellij.openapi.fileEditor.impl.EditorComposite;
 import com.intellij.openapi.fileEditor.impl.EditorTabColorProvider;
 import com.intellij.openapi.fileEditor.impl.EditorWindow;
 import com.intellij.openapi.fileEditor.impl.EditorWithProviderComposite;
@@ -25,8 +27,8 @@ public class TabHighlighterTabColorProvider implements EditorTabColorProvider {
         if (config != null && config.isBackgroundEnable()) {
             EditorWindow activeWindow = fileEditorManagerEx.getCurrentWindow();
             if (activeWindow != null) {
-                EditorWithProviderComposite selectedEditor = activeWindow.getSelectedEditor();
-                if (selectedEditor != null && virtualFile.equals(selectedEditor.getFile())) {
+                EditorComposite composite = activeWindow.getSelectedComposite();
+                if (composite != null && virtualFile.equals(composite.getFile())) {
                     return config.getBackgroundColor();
                 }
             }

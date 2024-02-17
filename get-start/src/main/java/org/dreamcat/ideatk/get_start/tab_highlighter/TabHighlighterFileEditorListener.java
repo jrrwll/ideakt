@@ -6,6 +6,7 @@ import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.fileEditor.FileEditorManagerEvent;
 import com.intellij.openapi.fileEditor.FileEditorManagerListener;
 import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx;
+import com.intellij.openapi.fileEditor.impl.EditorComposite;
 import com.intellij.openapi.fileEditor.impl.EditorWindow;
 import com.intellij.openapi.fileEditor.impl.EditorWithProviderComposite;
 import com.intellij.openapi.project.Project;
@@ -88,19 +89,19 @@ public class TabHighlighterFileEditorListener implements FileEditorManagerListen
     }
 
     private void highlight(VirtualFile file, EditorWindow editorWindow) {
-        if (file == null || editorWindow.findFileComposite(file) == null) return;
+        if (file == null || editorWindow.getComposite(file) == null) return;
         this.setTabColor(this.settingsConfig.getBackgroundColor(), file, editorWindow);
     }
 
     private void unhighlight(@NotNull FileColorManager fileColorManager, VirtualFile file, EditorWindow editorWindow) {
-        if (file == null || editorWindow.findFileComposite(file) == null) return;
+        if (file == null || editorWindow.getComposite(file) == null) return;
         this.setTabColor(fileColorManager.getFileColor(file), file, editorWindow);
     }
 
     private void setTabColor(Color color, @NotNull VirtualFile file, @NotNull EditorWindow editorWindow) {
-        EditorWithProviderComposite fileComposite = editorWindow.findFileComposite(file);
-        int index = Arrays.asList(editorWindow.getEditors()).indexOf(fileComposite);
-        if (index >= 0 && editorWindow.getTabbedPane() != null) {
+        EditorComposite composite = editorWindow.getComposite(file);
+        int index = editorWindow.getAllComposites().indexOf(composite);
+        if (index >= 0) {
             editorWindow.getTabbedPane().getTabs().getTabAt(index).setTabColor(color);
         }
     }

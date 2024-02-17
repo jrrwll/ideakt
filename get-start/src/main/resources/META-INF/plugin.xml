@@ -14,6 +14,7 @@
 
   <depends>com.intellij.modules.platform</depends>
   <depends>com.intellij.modules.java</depends>
+  <depends optional="true" config-file="plugin-maven.xml">org.jetbrains.idea.maven</depends>
   <!-- 允许使用javafx作为UI -->
   <!-- <depends>com.intellij.javafx</depends> -->
 
@@ -23,18 +24,23 @@
     <configurationType implementation="org.dreamcat.ideatk.get_start.rc.MyRunConfigurationType"/>
 
     <!--  窗体填充面板  -->
-    <toolWindow id="StockToolWindow" canCloseContents="true" anchor="bottom" factoryClass="org.dreamcat.ideatk.get_start.stock.StockToolWindowFactory"/>
+    <toolWindow id="StockToolWindow" canCloseContents="true" anchor="bottom"
+      factoryClass="org.dreamcat.ideatk.get_start.stock.StockToolWindowFactory"/>
     <!--  应用级单例  -->
     <applicationService serviceImplementation="org.dreamcat.ideatk.get_start.stock.StockDataState"/>
     <!--  idea 应用级设置(项目级 projectConfigurable) groupId：
           root、appearance、build、build.tools、tools、language、editor、project，other
     -->
-    <applicationConfigurable groupId="tools" displayName="Stock Plugin" id="preference.StockSettingsConfigurable" instance="org.dreamcat.ideatk.get_start.stock.StockSettingsConfigurable"/>
+    <applicationConfigurable groupId="tools" displayName="Stock Plugin"
+      id="preference.StockSettingsConfigurable"
+      instance="org.dreamcat.ideatk.get_start.stock.StockSettingsConfigurable"/>
 
     <!--  启动时执行  -->
     <postStartupActivity implementation="org.dreamcat.ideatk.get_start.tab_highlighter.TabHighlighterStartupActivity"/>
     <editorTabColorProvider implementation="org.dreamcat.ideatk.get_start.tab_highlighter.TabHighlighterTabColorProvider"/>
-    <projectConfigurable groupId="tools" displayName="Active Tab Highlighter Plugin" id="preference.HighlighterSettingsConfigurable" instance="org.dreamcat.ideatk.get_start.tab_highlighter.TabHighlighterSettingsConfigurable"/>
+    <projectConfigurable groupId="tools" displayName="Active Tab Highlighter Plugin"
+      id="preference.HighlighterSettingsConfigurable"
+      instance="org.dreamcat.ideatk.get_start.tab_highlighter.TabHighlighterSettingsConfigurable"/>
     <projectService serviceImplementation="org.dreamcat.ideatk.get_start.tab_highlighter.HighlighterSettingsConfig"/>
   </extensions>
 
@@ -62,13 +68,26 @@
       <add-to-group group-id="EditorPopupMenu" anchor="last"/>
     </action>
 
-    <action class="org.dreamcat.ideatk.get_start.action.DialogAction"
-      id="org.dreamcat.ideatk.action.DialogAction"
-      text="Dialog Action"
-      icon="AllIcons.Toolwindows.WebToolWindow"
-      popup="true">
-      <add-to-group group-id="ToolsMenu" anchor="last"/>
-      <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
-    </action>
+    <group id="MyMenu" text="My Menu" popup="true">
+      <!-- 主菜单-和Tools挨着 -->
+      <add-to-group group-id="MainMenu" anchor="after" relative-to-action="ToolsMenu"/>
+      <action class="org.dreamcat.ideatk.get_start.action.LoginAction"
+        icon="AllIcons.General.Balloon" text="登入" popup="true"/>
+      <action class="org.dreamcat.ideatk.get_start.action.DialogAction"
+        id="org.dreamcat.ideatk.action.DialogAction"
+        text="Dialog Action"
+        icon="AllIcons.Toolwindows.WebToolWindow"
+        popup="true"/>
+      <separator/>
+      <group id="MyAboutMenu" text="About Me" popup="true"
+        icon="AllIcons.General.BalloonInformation"
+        class="org.dreamcat.ideatk.get_start.action.AboutActionGroup"/>
+    </group>
   </actions>
+
+  <applicationListeners>
+    <listener class="org.dreamcat.ideatk.get_start.handler.MyProjectListener" topic="com.intellij.openapi.project.ProjectManagerListener"/>
+    <listener class="org.dreamcat.ideatk.get_start.handler.MyAppLifecycleListener" topic="com.intellij.ide.AppLifecycleListener"/>
+    <listener class="org.dreamcat.ideatk.get_start.handler.MyPerformanceListener" topic="com.intellij.diagnostic.IdePerformanceListener"/>
+  </applicationListeners>
 </idea-plugin>

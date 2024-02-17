@@ -76,8 +76,10 @@ public class EditorPsiUtil {
         if (!(psiElement instanceof PsiJavaToken)) return null;
         IElementType tokenType = ((PsiJavaToken) psiElement).getTokenType();
         if (tokenType == JavaTokenType.STRING_LITERAL) {
-            Object v = ((PsiLiteralExpression) psiElement.getParent()).getValue();
-            return Objects.toString(v);
+            if (psiElement.getParent() instanceof PsiLiteralExpression expression) {
+                Object v = expression.getValue();
+                return Objects.toString(v);
+            }
         }
         return null;
     }

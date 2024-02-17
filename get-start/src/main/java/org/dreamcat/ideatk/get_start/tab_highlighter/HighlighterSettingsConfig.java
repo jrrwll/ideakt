@@ -12,6 +12,7 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
 import java.awt.Color;
 import java.util.Objects;
 import lombok.Data;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 public class HighlighterSettingsConfig implements PersistentStateComponent<HighlighterSettingsConfig.PersistentState> {
 
     private final PersistentState persistentState;
+    @Getter
     private final TextAttributesDescription attributesDescription;
 
     public static @Nullable HighlighterSettingsConfig getSettings(Project project) {
@@ -60,10 +62,6 @@ public class HighlighterSettingsConfig implements PersistentStateComponent<Highl
     private void updateAttributes(PersistentState state) {
         this.attributesDescription.setBackgroundColor(state.background.getColor());
         this.attributesDescription.setBackgroundChecked(state.background.isEnabled());
-    }
-
-    public TextAttributesDescription getAttributesDescription() {
-        return attributesDescription;
     }
 
     public Color getBackgroundColor() {

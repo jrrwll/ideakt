@@ -5,6 +5,7 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.Ref;
 import java.awt.EventQueue;
 import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 import javax.swing.SwingUtilities;
 import lombok.SneakyThrows;
 import org.dreamcat.common.function.IVoidConsumer;
@@ -46,6 +47,14 @@ public class InvokeUtil {
         } else {
             ApplicationManager.getApplication().invokeLater(runnable);
         }
+    }
+
+    public static void executeOnPooledThread(Runnable r) {
+        ApplicationManager.getApplication().executeOnPooledThread(r);
+    }
+
+    public static <T> Future<T> executeOnPooledThread(Callable<T> c) {
+        return ApplicationManager.getApplication().executeOnPooledThread(c);
     }
 
     public static void callback(@Nullable IVoidConsumer<?> callback) {
