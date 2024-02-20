@@ -12,7 +12,7 @@ import org.dreamcat.common.function.IVoidConsumer;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * @author jinke07
+ * @author Jerry Will
  * @version 2024-02-15
  */
 public class InvokeUtil {
