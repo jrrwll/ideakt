@@ -24,6 +24,16 @@ import org.jetbrains.annotations.Nullable;
  */
 public class PsiUtil {
 
+    public static String getFilePath(PsiFile psiFile) {
+        VirtualFile vf = psiFile.getVirtualFile();
+        if (vf != null) {
+            return vf.getPath();
+        }
+        return null;
+    }
+
+    // ==== ==== ==== ====    ==== ==== ==== ====    ==== ==== ==== ====
+
     public static @Nullable PsiFile findFileByPath(Project project, String path) {
         if (project == null || ObjectUtil.isEmpty(path)) return null;
 

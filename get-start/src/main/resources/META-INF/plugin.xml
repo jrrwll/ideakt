@@ -35,13 +35,16 @@
       id="preference.StockSettingsConfigurable"
       instance="org.dreamcat.ideatk.get_start.stock.StockSettingsConfigurable"/>
 
+    <runLineMarkerContributor language=""
+      implementationClass="org.dreamcat.ideatk.get_start.run_line_marker.MyRunLineMarkerContributor"/>
+    <codeInsight.lineMarkerProvider language="JSON" implementationClass="org.dreamcat.ideatk.get_start.run_line_marker.MyLineMarkerProvider"/>
     <!--  启动时执行  -->
-    <postStartupActivity implementation="org.dreamcat.ideatk.get_start.tab_highlighter.TabHighlighterStartupActivity"/>
-    <editorTabColorProvider implementation="org.dreamcat.ideatk.get_start.tab_highlighter.TabHighlighterTabColorProvider"/>
-    <projectConfigurable groupId="tools" displayName="Active Tab Highlighter Plugin"
-      id="preference.HighlighterSettingsConfigurable"
-      instance="org.dreamcat.ideatk.get_start.tab_highlighter.TabHighlighterSettingsConfigurable"/>
-    <projectService serviceImplementation="org.dreamcat.ideatk.get_start.tab_highlighter.HighlighterSettingsConfig"/>
+    <!--<postStartupActivity implementation="org.dreamcat.ideatk.get_start.tab_highlighter.TabHighlighterStartupActivity"/>-->
+    <!--<editorTabColorProvider implementation="org.dreamcat.ideatk.get_start.tab_highlighter.TabHighlighterTabColorProvider"/>-->
+    <!--<projectConfigurable groupId="tools" displayName="Active Tab Highlighter Plugin"-->
+    <!--  id="preference.HighlighterSettingsConfigurable"-->
+    <!--  instance="org.dreamcat.ideatk.get_start.tab_highlighter.TabHighlighterSettingsConfigurable"/>-->
+    <!--<projectService serviceImplementation="org.dreamcat.ideatk.get_start.tab_highlighter.HighlighterSettingsConfig"/>-->
   </extensions>
 
   <actions>
@@ -56,11 +59,9 @@
       <add-to-group group-id="EditorPopupMenu" anchor="first"/>
     </action>
 
-    <action class="org.dreamcat.ideatk.get_start.action.MarkdownAction"
-      id="org.dreamcat.ideatk.action.MarkdownAction"
-      text="Markdown Select Action">
-      <add-to-group group-id="EditorPopupMenu" anchor="first"/>
-    </action>
+    <action class="org.dreamcat.ideatk.get_start.action.JsonAction"
+      id="org.dreamcat.ideatk.get_start.action.JsonAction"
+      use-shortcut-of="RunClass" text="JsonAction"/>
 
     <action class="org.dreamcat.ideatk.get_start.action.StringSelectAction"
       id="org.dreamcat.ideatk.action.StringSelectAction"

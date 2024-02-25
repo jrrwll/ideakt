@@ -1,6 +1,7 @@
 package org.dreamcat.ideatk.util.editor;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.JavaTokenType;
@@ -24,9 +25,7 @@ import lombok.experimental.Accessors;
 public class EditorPsiUtil {
 
     public static PsiFile getFile(AnActionEvent e) {
-        Editor editor = EditorUtil.getEditor(e);
-        if (editor == null) return null;
-        return getFile(editor);
+        return e.getData(CommonDataKeys.PSI_FILE);
     }
 
     public static PsiFile getFile(Editor editor) {
