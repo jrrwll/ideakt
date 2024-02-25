@@ -35,10 +35,13 @@
       id="preference.StockSettingsConfigurable"
       instance="org.dreamcat.ideatk.get_start.stock.StockSettingsConfigurable"/>
 
+    <!--  启动时执行  -->
+    <postStartupActivity implementation="org.dreamcat.ideatk.get_start.handler.MyProjectActivity"/>
+
     <runLineMarkerContributor language=""
       implementationClass="org.dreamcat.ideatk.get_start.run_line_marker.MyRunLineMarkerContributor"/>
     <codeInsight.lineMarkerProvider language="JSON" implementationClass="org.dreamcat.ideatk.get_start.run_line_marker.MyLineMarkerProvider"/>
-    <!--  启动时执行  -->
+
     <!--<postStartupActivity implementation="org.dreamcat.ideatk.get_start.tab_highlighter.TabHighlighterStartupActivity"/>-->
     <!--<editorTabColorProvider implementation="org.dreamcat.ideatk.get_start.tab_highlighter.TabHighlighterTabColorProvider"/>-->
     <!--<projectConfigurable groupId="tools" displayName="Active Tab Highlighter Plugin"-->

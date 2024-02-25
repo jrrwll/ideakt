@@ -36,3 +36,13 @@ publishPlugin {
     // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
     channels = [channel]
 }
+
+/*
+wget https://cache-redirector.jetbrains.com/www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea/ideaIC/2023.2/ideaIC-2023.2.zip
+
+~/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2023.2/
+
+shasum ideaIC-2023.2.zip
+sha1sum.exe ideaIC-2023.2.zip
+
+*/
