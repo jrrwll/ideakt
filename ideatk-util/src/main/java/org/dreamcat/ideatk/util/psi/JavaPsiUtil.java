@@ -1,6 +1,7 @@
 package org.dreamcat.ideatk.util.psi;
 
 import com.intellij.lang.jvm.annotation.JvmAnnotationAttribute;
+import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModuleRootManager;
@@ -10,19 +11,28 @@ import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryUtil;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.JavaTokenType;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiAnnotationMemberValue;
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiJavaToken;
+import com.intellij.psi.PsiLiteralExpression;
+import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiNameValuePair;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.search.searches.ClassInheritorsSearch;
 import com.intellij.psi.search.searches.ReferencesSearch;
+import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.util.PsiTreeUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import org.dreamcat.common.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -90,5 +100,27 @@ public class JavaPsiUtil {
             }
         }
         return virtualFiles;
+    }
+
+    // ==== ==== ==== ====    ==== ==== ==== ====    ==== ==== ==== ====
+
+    public static PsiClass getPsiClass(PsiElement psiElement) {
+        return PsiTreeUtil.getParentOfType(psiElement, PsiClass.class);
+    }
+
+    public static PsiMethod getPsiMethod(PsiElement psiElement) {
+        return PsiTreeUtil.getParentOfType(psiElement, PsiMethod.class);
+    }
+
+    public static String getString(PsiElement psiElement) {
+        if (!(psiElement instanceof PsiJavaToken)) return null;
+        IElementType tokenType = ((PsiJavaToken) psiElement).getTokenType();
+        if (tokenType == JavaTokenType.STRING_LITERAL) {
+            if (psiElement.getParent() instanceof PsiLiteralExpression expression) {
+                Object value = expression.getValue();
+                if (value != null) return value.toString();
+            }
+        }
+        return null;
     }
 }

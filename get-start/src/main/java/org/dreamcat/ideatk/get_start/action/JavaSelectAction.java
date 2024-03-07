@@ -5,9 +5,10 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiClass;
-import org.dreamcat.ideatk.util.editor.EditorPsiUtil;
-import org.dreamcat.ideatk.util.editor.EditorPsiUtil.JavaSelectInfo;
+import com.intellij.psi.PsiElement;
 import org.dreamcat.ideatk.util.NotificationUtil;
+import org.dreamcat.ideatk.util.editor.EditorUtil;
+import org.dreamcat.ideatk.util.psi.JavaPsiUtil;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -20,6 +21,9 @@ public class JavaSelectAction extends AnAction {
     // AnAction.update() 方法将在 UI 线程上频繁调用
     @Override
     public void update(@NotNull AnActionEvent e) {
+        PsiElement psiElement = EditorUtil.getSelectedElement(e);
+        JavaPsiUtil.getString(psiElement);
+
         JavaSelectInfo selectInfo = EditorPsiUtil.getJavaSelectInfo(e);
         if (selectInfo == null || selectInfo.getClazz() == null) {
             // 不显示该Action

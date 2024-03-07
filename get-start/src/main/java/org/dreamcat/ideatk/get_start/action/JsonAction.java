@@ -6,7 +6,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.DumbAwareAction;
 import com.intellij.psi.PsiFile;
 import org.dreamcat.ideatk.util.NotificationUtil;
-import org.dreamcat.ideatk.util.editor.EditorPsiUtil;
+import org.dreamcat.ideatk.util.editor.EditorUtil;
 import org.dreamcat.ideatk.util.psi.PsiUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,7 +30,7 @@ public class JsonAction extends DumbAwareAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        PsiFile psiFile = EditorPsiUtil.getFile(e);
+        PsiFile psiFile = EditorUtil.getFile(e);
         if (psiFile == null) return;
         String path = PsiUtil.getFilePath(psiFile);
         if (path == null) return;
@@ -40,7 +40,7 @@ public class JsonAction extends DumbAwareAction {
 
     private static boolean isEnabled(@NotNull AnActionEvent e) {
         if (e.getProject() == null) return false;
-        PsiFile psiFile = EditorPsiUtil.getFile(e);
+        PsiFile psiFile = EditorUtil.getFile(e);
         return psiFile instanceof JsonFile;
     }
 }
