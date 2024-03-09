@@ -11,33 +11,33 @@ import org.jetbrains.annotations.NotNull;
  * @author Jerry Will
  * @version 2024-02-09
  */
-public class MyConfigurationFactory extends ConfigurationFactory {
+public class ScriptConfigurationFactory extends ConfigurationFactory {
 
-    private static final MyConfigurationFactory INSTANCE =
-            new MyConfigurationFactory(MyRunConfigurationType.getInstance());
+    private static final ScriptConfigurationFactory INSTANCE =
+            new ScriptConfigurationFactory(ScriptRunConfigurationType.getInstance());
 
 
-    public static MyConfigurationFactory getInstance() {
+    public static ScriptConfigurationFactory getInstance() {
         return INSTANCE;
     }
 
-    public MyConfigurationFactory(MyRunConfigurationType configurationType) {
+    public ScriptConfigurationFactory(ScriptRunConfigurationType configurationType) {
         super(configurationType);
     }
 
     @Override
     public @NotNull @NonNls String getId() {
-        return MyRunConfigurationType.ID;
+        return ScriptRunConfigurationType.ID;
     }
 
     @Override
     public @NotNull RunConfiguration createTemplateConfiguration(@NotNull Project project) {
-        return new MyRunConfiguration(project, this, "Mrpc");
+        return new ScriptRunConfiguration(project, this, "Mrpc");
     }
 
     @Override
     public Class<? extends BaseState> getOptionsClass() {
-        return MyRunConfiguration.Options.class;
+        return ScriptRunConfiguration.Options.class;
     }
 
 }

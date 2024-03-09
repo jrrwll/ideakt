@@ -9,17 +9,17 @@ import org.jetbrains.annotations.NotNull;
  * @author Jerry Will
  * @version 2024-02-09
  */
-public class MyRunConfigurationType extends ConfigurationTypeBase {
+public class ScriptRunConfigurationType extends ConfigurationTypeBase {
 
-    static final String ID = MyRunConfiguration.class.getSimpleName();
+    static final String ID = ScriptRunConfiguration.class.getSimpleName();
 
-    private static final MyRunConfigurationType INSTANCE = new MyRunConfigurationType();
+    private static final ScriptRunConfigurationType INSTANCE = new ScriptRunConfigurationType();
 
-    public static MyRunConfigurationType getInstance() {
+    public static ScriptRunConfigurationType getInstance() {
         return INSTANCE;
     }
 
-    protected MyRunConfigurationType() {
+    protected ScriptRunConfigurationType() {
         super(ID, "My Script", "invoke a script",
                 AllIcons.FileTypes.Text);
     }
@@ -27,6 +27,6 @@ public class MyRunConfigurationType extends ConfigurationTypeBase {
     @NotNull
     @Override
     public ConfigurationFactory[] getConfigurationFactories() {
-        return new ConfigurationFactory[]{MyConfigurationFactory.getInstance()};
+        return new ConfigurationFactory[]{ScriptConfigurationFactory.getInstance()};
     }
 }

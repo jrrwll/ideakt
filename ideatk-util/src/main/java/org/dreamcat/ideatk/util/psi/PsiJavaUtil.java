@@ -1,7 +1,6 @@
 package org.dreamcat.ideatk.util.psi;
 
 import com.intellij.lang.jvm.annotation.JvmAnnotationAttribute;
-import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModuleRootManager;
@@ -31,15 +30,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import org.dreamcat.common.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Jerry Will
  * @version 2024-01-27
  */
-public class JavaPsiUtil {
+public class PsiJavaUtil {
 
     public static Module getModule(PsiClass clazz) {
         Project project = clazz.getProject();

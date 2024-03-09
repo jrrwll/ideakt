@@ -14,14 +14,15 @@
 
   <depends>com.intellij.modules.platform</depends>
   <depends>com.intellij.modules.java</depends>
-  <depends optional="true" config-file="plugin-maven.xml">org.jetbrains.idea.maven</depends>
+  <depends>org.intellij.plugins.markdown</depends>
   <!-- 允许使用javafx作为UI -->
   <!-- <depends>com.intellij.javafx</depends> -->
+  <depends optional="true" config-file="plugin-maven.xml">org.jetbrains.idea.maven</depends>
 
   <extensions defaultExtensionNs="com.intellij">
     <!--<errorHandler implementation="org.dreamcat.ideatk.handler.SentryReportHandler"/>-->
     <!-- 运行配置 -->
-    <configurationType implementation="org.dreamcat.ideatk.get_start.rc.MyRunConfigurationType"/>
+    <configurationType implementation="org.dreamcat.ideatk.get_start.rc.ScriptRunConfigurationType"/>
 
     <!--  窗体填充面板  -->
     <toolWindow id="StockToolWindow" canCloseContents="true" anchor="bottom"
@@ -51,9 +52,9 @@
   </extensions>
 
   <actions>
-    <action class="org.dreamcat.ideatk.get_start.action.JavaSelectAction"
-      id="org.dreamcat.ideatk.action.JavaSelectAction"
-      text="Java Select Action">
+    <action class="org.dreamcat.ideatk.get_start.action.MarkdownAction"
+      id="org.dreamcat.ideatk.get_start.action.MarkdownAction"
+      text="Run Markdown">
       <!-- 菜单 - Tools -->
       <add-to-group group-id="ToolsMenu" anchor="last"/>
       <!--  工具栏 - Run-->
@@ -64,11 +65,11 @@
 
     <action class="org.dreamcat.ideatk.get_start.action.JsonAction"
       id="org.dreamcat.ideatk.get_start.action.JsonAction"
-      use-shortcut-of="RunClass" text="JsonAction"/>
+      use-shortcut-of="RunClass" text="Run Json"/>
 
-    <action class="org.dreamcat.ideatk.get_start.action.StringSelectAction"
-      id="org.dreamcat.ideatk.action.StringSelectAction"
-      text="String Select Action">
+    <action class="org.dreamcat.ideatk.get_start.action.JavaStringAction"
+      id="org.dreamcat.ideatk.get_start.action.JavaStringAction"
+      text="Java String Action">
       <add-to-group group-id="EditorPopupMenu" anchor="last"/>
     </action>
 

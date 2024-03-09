@@ -4,8 +4,12 @@ import com.intellij.json.psi.JsonFile;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.DumbAwareAction;
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
-import org.dreamcat.ideatk.util.NotificationUtil;
+import java.util.Arrays;
+import org.dreamcat.ideatk.get_start.rc.ScriptRunConfiguration;
+import org.dreamcat.ideatk.get_start.rc.ScriptRunConfigurationType;
+import org.dreamcat.ideatk.util.RunConfigurationUtil;
 import org.dreamcat.ideatk.util.editor.EditorUtil;
 import org.dreamcat.ideatk.util.psi.PsiUtil;
 import org.jetbrains.annotations.NotNull;
@@ -30,12 +34,19 @@ public class JsonAction extends DumbAwareAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
+        Project project = e.getProject();
+        if (project == null) return;
         PsiFile psiFile = EditorUtil.getFile(e);
         if (psiFile == null) return;
+
         String path = PsiUtil.getFilePath(psiFile);
         if (path == null) return;
-
-        NotificationUtil.notify(path);
+        RunConfigurationUtil.execute(
+                path, ScriptRunConfigurationType.getInstance(), project,
+                (ScriptRunConfiguration c) -> {
+                    c.setCommand(Arrays.asList("bash", "-c",
+                            "ls -lah %s && cat %s".formatted(path, path)));
+                });
     }
 
     private static boolean isEnabled(@NotNull AnActionEvent e) {

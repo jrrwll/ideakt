@@ -7,6 +7,7 @@ import com.intellij.execution.RunManager;
 import com.intellij.execution.RunnerAndConfigurationSettings;
 import com.intellij.execution.configurations.CommandLineState;
 import com.intellij.execution.configurations.ConfigurationFactory;
+import com.intellij.execution.configurations.ConfigurationType;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.configurations.PtyCommandLine;
 import com.intellij.execution.configurations.RunConfiguration;
@@ -47,18 +48,20 @@ public class RunConfigurationUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends RunConfiguration> void execute(Project project,
-            @NotNull String configurationName, @NotNull ConfigurationFactory factory,
-            Consumer<T> configurator) {
+    public static <T extends RunConfiguration> void execute(
+            @NotNull String configurationName, @NotNull ConfigurationType configurationType,
+            Project project, Consumer<T> configurator) {
         RunnerAndConfigurationSettings settings = RunManager.getInstance(project)
-                .getConfigurationSettingsList(factory.getType()).stream()
+                .getConfigurationSettingsList(configurationType).stream()
                 .filter(it -> it.getName().equals(configurationName))
                 .findFirst().orElse(null);
 
         if (settings == null) {
+            ConfigurationFactory factory = configurationType.getConfigurationFactories()[0];
             settings = RunManager.getInstance(project).createConfiguration(
                     configurationName, factory);
         }
+        settings.setName(configurationName);
         if (configurator != null) configurator.accept((T)settings.getConfiguration());
 
         Executor executor = DefaultRunExecutor.getRunExecutorInstance();
@@ -68,27 +71,27 @@ public class RunConfigurationUtil {
     // ==== ==== ==== ====    ==== ==== ==== ====    ==== ==== ==== ====
 
     public static RunProfileState createPtyCommandLineState(
-            ExecutionEnvironment env, String... cmds) {
-        return createPtyCommandLineState(env, true, cmds);
+            ExecutionEnvironment env, String... command) {
+        return createPtyCommandLineState(env, true, command);
     }
 
     public static RunProfileState createPtyCommandLineState(
-            ExecutionEnvironment env, boolean colored, String... cmds) {
-        return createCommandLineState(env, colored, true, cmds);
+            ExecutionEnvironment env, boolean colored, String... command) {
+        return createCommandLineState(env, colored, true, command);
     }
 
     public static RunProfileState createCommandLineState(
-            ExecutionEnvironment env, String... cmds) {
-        return createCommandLineState(env, true, cmds);
+            ExecutionEnvironment env, String... command) {
+        return createCommandLineState(env, true, command);
     }
 
     public static RunProfileState createCommandLineState(
-            ExecutionEnvironment env, boolean colored, String... cmds) {
-        return createCommandLineState(env, colored, false, cmds);
+            ExecutionEnvironment env, boolean colored, String... command) {
+        return createCommandLineState(env, colored, false, command);
     }
 
     public static RunProfileState createCommandLineState(
-            ExecutionEnvironment env, boolean colored, boolean pty, String... cmds) {
+            ExecutionEnvironment env, boolean colored, boolean pty, String... command) {
         return new CommandLineState(env) {
 
             @NotNull
@@ -96,9 +99,9 @@ public class RunConfigurationUtil {
             protected ProcessHandler startProcess() throws ExecutionException {
                 GeneralCommandLine cli;
                 if (pty) {
-                    cli = new PtyCommandLine(Arrays.asList(cmds));
+                    cli = new PtyCommandLine(Arrays.asList(command));
                 } else {
-                    cli = new GeneralCommandLine(cmds);
+                    cli = new GeneralCommandLine(command);
                 }
 
                 ProcessHandlerFactory factory = ProcessHandlerFactory.getInstance();
